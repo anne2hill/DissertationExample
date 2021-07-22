@@ -5,8 +5,12 @@ output:
   html_document:
     css: style.css
     code_folding: hide
-    theme: united 
+    theme: lumen 
     toc: true
+    toc_depth: 2
+    number_sections: true
+    toc_float: 
+      toc_collapsed: false
 ---
 
 ```{r global, include=FALSE, echo = FALSE}
@@ -46,7 +50,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ***
 
-## Introduction
+# Introduction
 The following example provides a summary of a study I completed as part of my dissertation for a Doctor of Philosophy in Psychology. Although the research is a psychological study, the methods and analytical approach are generalizable. Due to privacy concerns, I cannot share the raw data from the study, only aggregated and pre-processed results. However, the sections below included supplementary coding examples that illustrate how the raw data were preprocesses and analyzed.
 
 
@@ -70,7 +74,7 @@ The current study tests this “effortful bias” account in the context of Amer
 
 ***
 
-## Section 1: Study Thesis, Predictions, & Procedure
+# Predictions & Procedure
 
 
 **Premise:** In intergroup conflict characterized by explicit and extreme prejudice, individuals are motivated to maintain positive evaluations of ingroup members and negative evaluations of outgroup members. American political polarization is an accessible and relevant context to examine the role of effortful, control processes in maintaining these biased evaluations of in- and outgroup targets. See Figure 1 for the study design. 
@@ -90,10 +94,10 @@ The current study tests this “effortful bias” account in the context of Amer
 
 ***
 
-## Section 2: Data Analyses & Results
+# Data Analyses & Results
 
 
-### Analysis Procedure 
+## Analysis Procedure 
 
 Response data were collected via an online Mouse Tracker platform, which recorded participants’ mouse trajectories and clicks during the social evaluation task. Response and trial condition data from the evaluation trials were extracted via the ‘mousetrap’ package in R (Kieslich, Henninger, Wulff, Haslbeck, & Schulte-Mecklenbeck, 2019). Consistent with previous research, responses with reaction times that exceeded three standard deviations from participant-level means were excluded from analysis. Finally, responses were excluded if the participant did not provide a target rating in the self-paced survey that followed the evaluation task.
 
@@ -104,7 +108,9 @@ The structure of the speeded evaluation data are nested, as participants complet
 
 ***
 
-### Validation Analysis: Did the target manipulations have the intended effect?
+## Validation Analysis
+
+**Did the target manipulations have the intended effect?**
 
 The targets participants evaluated in the evaluation task were manipulated by valence (positive or negative) and group membership (ingroup or outgroup). To validate these manipulations, we tested both (a) whether participants were more likely to “like” positive than negative targets, and (b) whether participants were more likely to “like” in- than outgroup member targets. To account for non-independent observations of the trial data, we ran a Generalized Estimating Equations logistic regression to assess differences in participants’ likelihood of “liking” targets as a function of the targets’ group membership (dummy coded, 0: outgroup, 1: ingroup) and personality valence (dummy coded: 0: negative, 1: positive). Because of the forced-choice, “like or dislike” nature of the responses, the model assumed a binomial distribution. Since the evaluation task occurred over a relatively short, 6-minute timeframe, we did not expect low-frequency drift as might be seen over longer timeframes and specified an exchangeable correlation matrix. 
 
@@ -168,12 +174,15 @@ plot.m1 %>%
 
 ***
 
-### Primary Analysis: Did high cognitive load reduce motivationally consistent evaluations of incongruent targets? 
+## Primary Analysis {.tabset .tabset-fade .tabset-pills}
+
+**Did high cognitive load reduce motivationally consistent evaluations of incongruent targets?**
 
 Our main prediction was that high cognitive load would disrupt participant’s ability to make motivationally consistent evaluations of targets whose group membership was misaligned with previously learned valence associations. To this end, we ran a second Generalized Estimating Equations logistic regression to assess the likelihood of making motivationally consistent evaluations as a function of cognitive load and group membership by valence congruence. Motivationally consistent evaluations were coded as a binary outcome indicated as consistent (1: like ingroup target, dislike outgroup target) or inconsistent (0: dislike ingroup target, like outgroup target). Cognitive load was dummy coded (0: low, 1: high). Target congruence was dummy coded to reflect two levels: congruent (0: positive ingroup targets and negative outgroup targets), and incongruent (1: negative ingroup targets and positive outgroup targets). Finally, the model included an interaction term for round to indicate repeated evaluations. 
 
-We expected that participants in the high load condition would make less motivationally consistent evaluations of incongruent, but not congruent, targets. Directionally consistent with our predictions, the model yielded a marginally significant interaction between cognitive load, target congruence, and round (χ2 = 3.23, p = 0.072). However, post-hoc analyses showed that, in the initial round of the task, the interaction between cognitive load and alignment was driven by differences for both congruent and incongruent targets. We only predicted changes in incongruent targets, but the interaction was driven by high-load participants being both (a) more likely to make motivationally consistent evaluations of congruent targets and (b) less likely to make motivationally consistent evaluations of congruent targets (Figure 3). Neither effect alone was statistically significant. Further, the difference by cognitive load decreased over time, such that low-load responses came to look more like high-load responses as the task progressed (Figure 4). Error bars reflect 95% confidence intervals.
+We expected that participants in the high load condition would make less motivationally consistent evaluations of incongruent, but not congruent, targets. Directionally consistent with our predictions, the model yielded a marginally significant interaction between cognitive load, target congruence, and round (χ2 = 3.23, p = 0.072). However, post-hoc analyses showed that, in the initial round of the task, the interaction between cognitive load and alignment was driven by differences for both congruent and incongruent targets. We only predicted changes in incongruent targets, but the interaction was driven by high-load participants being both (a) more likely to make motivationally consistent evaluations of congruent targets and (b) less likely to make motivationally consistent evaluations of congruent targets (Figure 3.3.1). Neither effect alone was statistically significant. Further, the difference by cognitive load decreased over time, such that low-load responses came to look more like high-load responses as the task progressed (Figure 3.3.1). Error bars reflect 95% confidence intervals.
 
+### Initial Evaluation Round 
 
 ```{r warning=FALSE}
 ## The GEE model is commented out, since I cannot upload the  raw data. The filters apply a priori exclusion criteria and limit analyses to experimental trials (excluding practice and filler trials).##
@@ -210,7 +219,7 @@ plot.m2 %>%
   geom_bar(stat="identity", position=position_dodge()) +
   geom_errorbar(aes(ymin = asymp.LCL, ymax = asymp.UCL), 
                 position=position_dodge(.9), width=0) + 
-  labs(title="Figure 3: Motivationally Consistent Evaluations (MCE)",
+  labs(title="Figure 3.3.1: Motivationally Consistent Evaluations (MCE)",
        subtitle="Effect of Cognitive Load and Target Congruence during the \nFirst Round of the Evaluation Task") +
   labs(x="", y="Probability of MCE: Liking Ingroup Memebers \nand Disliking Outgroup Members") +
   labs(fill="Target Congruence", linetype = "Evaluation") +
@@ -235,6 +244,11 @@ plot.m2 %>%
 # contrast(contrast.m2, interaction = "pairwise")   
 
 
+```
+
+### Evaluations Across Rounds 
+
+```{r warning=FALSE}
 ## Over time
 ## Generate Estimated Marginal Means
 lsm.mod2.v2 <- lsmeans(mod2_model, ~factor(clChr)*factor(conflictChr)*evalRound, type = "response",
@@ -254,7 +268,7 @@ plot.m2.v2 %>%
   geom_line(aes(linetype = fct_reorder(CogLoad, CogLoad_order)), position = position_dodge(width=.05)) + 
   geom_point( position = position_dodge(width=.05)) +
   geom_pointrange(aes(ymin=asymp.LCL, ymax=asymp.UCL), position = position_dodge(width=.05))+
-  labs(title="Figure 4: Motivationally Consistent Evaluations (MCE)",
+  labs(title="Figure 3.3.2: Motivationally Consistent Evaluations (MCE)",
        subtitle="Effect of Cognitive Load and Group Membership by Valence Alignment \n Across Rounds of Evaluation Task") +
   labs(x="First to Last Target Evaluation", y="MCE: Probability of Liking Ingroup Memebrs \nand Disliking Outgroup Members") +
   labs(color="Target Congruence", linetype = "Cognitive Load") +
@@ -278,13 +292,14 @@ plot.m2.v2 %>%
 ```
 
 
+
 [<a href="#top">Back to top</a>]{style="float:right"}
 
 ***
 
-## Section 3: Power Analysis for Replication Study (Bootstrap Simulation)
+# Bootstrap Simulation
 
-**Analytic Procedure** 
+**Analytic Procedure: Power Analysis using Simulation of Bootstrapped Data for Replication** 
 
 Experimental replications are a crucial component of psychological research. They help ensure the effects in an experiment are reliable, particularly when the effect was exploratory, small, or marginal. 
 
