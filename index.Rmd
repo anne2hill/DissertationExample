@@ -1,5 +1,5 @@
 ---
-title: "NYC Opportunity Poverty Research Team Research Portfolio: Research Example 1"
+title: "Dissertation Study Research Example"
 author: "Anne Hill"
 output: 
   html_document:
